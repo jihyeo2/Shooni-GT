@@ -10,21 +10,26 @@ export default defineComponent({
             type: Array<Article>
         },
     },
+    emits: ['marker-click'],
     components: {
         GoogleMap,
         Marker,
     },
-    setup() {
+    setup(props, { emit }) {
         const center = { lat: 33.775618, lng: -84.396285 }
         const rand_str = import.meta.env.VITE_DATA_ENDPOINT_KEY
+        function onMarkerClick(article: Article) {
+            emit('marker-click', article)
+        }
         return {
             center,
-            rand_str
+            rand_str,
+            onMarkerClick,
         }
 
     },
 
-    
+
 })
 </script>
 
@@ -37,10 +42,11 @@ export default defineComponent({
       :zoom="15"
       >
 
-        <Marker 
+        <Marker
         v-for="(item, index) in articles" v-bind:key="index"
-        :options="{ position: { lat: item['latitude'], lng: item['longitude']} }" />
+        :options="{ position: { lat: item['latitude'], lng: item['longitude']} }"
+        @click="onMarkerClick(item)" />
 
-        
+
     </GoogleMap>
 </template>

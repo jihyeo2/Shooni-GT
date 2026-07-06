@@ -74,35 +74,33 @@ export default defineComponent({
   methods: {
     onArticleHover(article: Article) {
       this.selectedArticle = article
+    },
+    onMarkerClick(article: Article) {
+      // Deliberately not using VirtualList's own scrollToIndex: its last-item
+      // case delegates to scrollToBottom(), which retries on a timer and can
+      // spin indefinitely, permanently overriding any later scroll attempt.
+      // Scrolling the actual card into view sidesteps that bug entirely.
+      const card = document.querySelector(`[data-article-id="${article.id}"]`) as HTMLElement | null
+      card?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' })
     }
   }
 })
 </script>
 
 <template>
-  <main class="p-4">
+  <main class="max-w-6xl mx-auto px-4 py-6 flex flex-col gap-6">
       <FilterBar
-        style="margin-top: 3%;"
         v-bind:apartments="apartments"
         v-model:filter-apartments="filter"
       ></FilterBar>
 
-    <div class="my-component">
-      <div class="horizontal-line"></div>
-    </div>  
-    
       <SearchMap
         v-bind:articles="filteredArticles"
+        @marker-click="onMarkerClick"
       ></SearchMap>
-    
-    <div class="my-component">
-      <div class="horizontal-line"></div>
-    </div>  
-    
-    <br>
+
       <VirtualList
-      style="margin-bottom: 2px;"
-      class="list-horizontal w-auto"
+      class="list-horizontal"
       :data-key="'id'"
       :data-sources="filteredArticles"
       :data-component="articleCard"
@@ -113,20 +111,20 @@ export default defineComponent({
       @article-hover="onArticleHover"
       />
     </main>
-  
+
   <Footer></Footer>
 </template>
 
 <style>
-.my-component .horizontal-line {
-  height: 1px;
-  background-color: rgba(0, 0, 0, 0.19);
-  margin: 5px 0;
+.list-horizontal {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
 }
 
-.list-horizontal {
-  margin: auto;
-  overflow-x: auto;
+.list-horizontal .wrapper {
+  display: flex;
+  flex-direction: row;
 }
 
 .list-item-horizontal {
@@ -134,6 +132,7 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
   margin: 0 10px;
 }
 

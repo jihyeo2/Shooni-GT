@@ -18,6 +18,6 @@ gcloud functions deploy build-apartments \
     --allow-unauthenticated \
     --timeout=1800 \
     --set-env-vars "API_KEY=$API_KEY" \
-    --project=shooni-380301
+    --project=demoproj-400221
 
     

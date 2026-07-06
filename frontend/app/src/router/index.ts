@@ -9,6 +9,7 @@ import FilterReview from "../views/FilterReview.vue";
 import Search from "../views/Search.vue";
 import About from "../views/About.vue";
 import SignUp from '../views/SignUp.vue';
+import Login from '../views/Login.vue';
 import PageNotFound from "../views/PageNotFound.vue";
 import Review from '../views/Review.vue';
 import ComingSoon from "../views/ComingSoon.vue";
@@ -110,6 +111,24 @@ const routes = [
         },
     },
     {
+      path: "/community",
+      name: "Community",
+      component: ComingSoon,
+      meta: {
+          title: 'Community - Shooni',
+          metaTags: [
+            {
+              name: 'description',
+              content: 'The community page of Shooni.'
+            },
+            {
+              property: 'og:description',
+              content: 'The community page of Shooni.'
+            }
+          ]
+        },
+    },
+    {
         path: "/search",
         name: "Search",
         component: Search,
@@ -164,9 +183,27 @@ const routes = [
       },
     },
     {
+      path: "/login",
+      name: "Login",
+      component: Login,
+      meta: {
+        title: 'Log in - Shooni',
+        metaTags: [
+          {
+            name: 'description',
+            content: 'The login page of Shooni.'
+          },
+          {
+            property: 'og:description',
+            content: 'The login page of Shooni.'
+          }
+        ]
+      },
+    },
+    {
       path: "/review",
       name: "Review",
-      component: Review, 
+      component: Review,
       meta: {
         title: 'Review - Shooni',
         metaTags: [

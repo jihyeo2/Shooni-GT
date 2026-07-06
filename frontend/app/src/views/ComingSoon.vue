@@ -1,13 +1,9 @@
 <template>
-  <br/>
-  <br/>
-  <div class="app">
-    <div class="flex justify-center">
-                <img src="../assets/images/hammer.gif" style="max-width: 25%; margin-top: 10px;">
-    </div>
-    <div class="flex justify-center text-brightRed" style="text-align:center;font-size:20px;font-weight:bold;font-family:avenir">This site is currently under construction</div>
-    <div class="flex justify-center text-brightRed" style="text-align:center;font-size:20px;font-weight:bold;font-family:avenir">Come back in</div>
-    <div class="center">
+  <div class="min-h-[70vh] flex flex-col items-center justify-center text-center px-5">
+    <img src="../assets/images/hammer.gif" class="max-w-[220px]">
+    <h1 class="text-xl font-semibold text-brightRed mt-4">This page is currently under construction</h1>
+    <p class="text-darkGrayishBlue mt-1">Come back in</p>
+    <div class="mt-6">
       <Countdown />
     </div>
   </div>
@@ -22,20 +18,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.app {
-  text-align: center;
-}
-.flex-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 100px;
-}
-.center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 10vh;
-}
-</style>

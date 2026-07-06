@@ -42,7 +42,7 @@ def to_json(apartment, long, lat):
     data['longitude'] = long
     return json.dumps(data)
 
-db = firestore.Client()
+db = firestore.Client(database='shooni-demo')
 doc_ref = db.collection(u'articles').document(u'current')
 
 def insert_apartment(_):

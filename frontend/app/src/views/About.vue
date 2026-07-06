@@ -10,204 +10,74 @@ export default defineComponent({
 </script>
 
 <template>
-  <section class="background-image1"></section>
-    <div class = "center-window1" >
-        <h1 class="centered-heading2 with-image">About us</h1>
-    </div>
-    <div class="content-wrapper" style="margin: 80px 0;">
-      <div class="content">
-        <div class="text">
-          <h1>Our Mission</h1>
-          <p>The search for housing is complicated for college students because they have little time and money but a lot of pressure to find housing near their schools and no centralized place to search for it. We aim to simplify the search process for college students to find desirable housing by creating that centralized location -- Shooni.
+    <section class="about-hero">
+      <h1 class="about-hero-heading">About us</h1>
+    </section>
+
+    <section class="py-20 px-6 md:px-16 bg-white">
+      <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl font-semibold text-veryDarkBlue mb-5">Our Mission</h2>
+          <p class="text-lg text-darkGrayishBlue leading-relaxed">
+            The search for housing is complicated for college students because they have little time and money
+            but a lot of pressure to find housing near their schools and no centralized place to search for it.
+            We aim to simplify the search process for college students to find desirable housing by creating
+            that centralized location — Shooni.
           </p>
         </div>
-        <div class="image-b">
-        <img src="/src/assets/images/yellow.png" alt="your image">
-        </div>
-        <div class="image">
-          <img src="/src/assets/images/au2.jpg" alt="your image">
+        <div class="flex justify-center">
+          <img src="/src/assets/images/au2.jpg" class="about-photo" alt="Students moving into an apartment">
         </div>
       </div>
-    </div>
-    <div class="content-wrapper" style="margin: 120px 0;">
-      <div class="content2">
-        <div class="image2">
-          <img src="/src/assets/images/au3.jpg" alt="your image">
+    </section>
+
+    <section class="py-20 px-6 md:px-16 bg-veryLightGray">
+      <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div class="order-2 md:order-1 flex justify-center">
+          <img src="/src/assets/images/au3.jpg" class="about-photo" alt="Students in a shared living space">
         </div>
-        <div class="text2">
-          <h2>Our Values</h2>
-          <p>
+        <div class="order-1 md:order-2">
+          <h2 class="text-3xl font-semibold text-veryDarkBlue mb-5">Our Values</h2>
+          <p class="text-lg text-darkGrayishBlue leading-relaxed">
             We aim to develop a rating system, a roommate search system, and an interactive map on our website.
-            We want to share subleasing opportunities for students in need of short-term housing; We want to establish a user-friendly forum for students to 
-            find their perfect roommates; we want students to be excited to leave the nest.
-            We believe our idea will provide a more efficient and effective experience for students.
+            We want to share subleasing opportunities for students in need of short-term housing; we want to
+            establish a user-friendly forum for students to find their perfect roommates; we want students to be
+            excited to leave the nest. We believe our idea will provide a more efficient and effective experience
+            for students.
           </p>
         </div>
-    </div>
-  </div>
+      </div>
+    </section>
 
-  <section>
-
-  </section>
-  <Footer></Footer>
+    <Footer></Footer>
 </template>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<style>
-
-
-.with-image {
-    background-image: url("/src/assets/images/bird1.png");
-    background-repeat: no-repeat;
-    background-position: right center;
-    background-size: contain;
-    padding-right: 70px; 
-  }
-
-
-.center-window1 {
+<style scoped>
+.about-hero {
+  height: 320px;
   display: flex;
-  justify-content: center;
   align-items: center;
-}
-
-.centered-heading2 {
-  color: rgb(19, 19, 19);
-  font-size: 3.5rem;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 15vh;
-}
-
-.content-wrapper {
-  display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 50px 0;
-  position: relative;
-
-}
-.image-b {
-  width: 700px;
-  float: left;
-  top:45%;
-  margin-right: 52%;
-  position:absolute;
-  z-index: -1;
-  opacity: 0.7;
-}
-
-.content {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-  width: 70%;
-}
-
-.text {
-  flex: 1;
-  padding-right: 170px;
-}
-
-.image {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.image img {
-  max-width: 100%;
-  height: auto;
-}
-
-.text h1 {
-  color: rgb(19, 19, 19);
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: center;
-
-}
-
-
-.text p {
-  font-size: 1.5rem;
-  text-align: justify;
-  margin-top: 25px;
-}
-
-
-.content2 {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-  width: 70%;
-}
-
-.text2 {
-  flex: 1;
-  padding-left: 170px;
-}
-
-.image2 {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.image2 img {
-  max-width: 100%;
-  height: auto;
-}
-
-.text2 h2 {
-  color: rgb(19, 19, 19);
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: center;
-
-}
-
-
-.text2 p {
-  font-size: 1.5rem;
-  text-align: justify;
-  margin-top: 25px;
-}
-
-.background-image1 {
-  background-image: url('/src/assets/images/aubg1.jpg');
-  background-size: cover;
+  background-image: linear-gradient(rgba(29,30,37,0.45), rgba(29,30,37,0.45)), url("/src/assets/images/aubg1.jpg");
   background-position: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-  opacity: 0.6;
+  background-size: cover;
+}
+.about-hero-heading {
+  font-family: 'Inria Serif', serif;
+  font-size: 3rem;
+  font-weight: 400;
+  color: white;
 }
 
+.about-photo {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 1rem;
+  object-fit: cover;
+  box-shadow: 0 12px 30px rgba(72,36,82,0.15);
+}
 
-
+@media (max-width: 768px) {
+  .about-hero-heading { font-size: 2.25rem; }
+}
 </style>
-
-
-
-
-

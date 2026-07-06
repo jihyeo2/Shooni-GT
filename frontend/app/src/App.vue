@@ -11,5 +11,7 @@ export default {
 
 <template>
   <NavBar/>
-  <router-view />
+  <div class="pt-16">
+    <router-view />
+  </div>
 </template>

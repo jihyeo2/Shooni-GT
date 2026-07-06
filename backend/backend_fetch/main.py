@@ -6,7 +6,7 @@ from google.cloud import firestore
 
 from flask import jsonify
 
-db = firestore.Client()
+db = firestore.Client(database='shooni-demo')
 doc_ref = db.collection(u'articles').document(u'current')
 
 @functions_framework.http

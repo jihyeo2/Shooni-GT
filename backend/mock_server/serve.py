@@ -1,0 +1,308 @@
+#!/usr/bin/env python3
+"""Local mock server for Shooni demo. Serves fake apartment data matching the
+Firestore response format the frontend expects."""
+
+import json
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+ARTICLES = [
+    {
+        "address": "95 8th St NW, Atlanta, GA 30309",
+        "rent": 1850,
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "link": "https://www.moderamidtown.com/atlanta/modera-midtown/conventional/",
+        "available_date": "2024-08-01",
+        "apartment": "Modera Midtown",
+        "is_studio": False,
+        "latitude": 33.7765,
+        "longitude": -84.3928,
+    },
+    {
+        "address": "95 8th St NW, Atlanta, GA 30309",
+        "rent": 1500,
+        "bedrooms": 0,
+        "bathrooms": 1,
+        "link": "https://www.moderamidtown.com/atlanta/modera-midtown/conventional/",
+        "available_date": "2024-08-01",
+        "apartment": "Modera Midtown",
+        "is_studio": True,
+        "latitude": 33.7765,
+        "longitude": -84.3928,
+    },
+    {
+        "address": "95 8th St NW, Atlanta, GA 30309",
+        "rent": 2400,
+        "bedrooms": 2,
+        "bathrooms": 2,
+        "link": "https://www.moderamidtown.com/atlanta/modera-midtown/conventional/",
+        "available_date": "2024-09-01",
+        "apartment": "Modera Midtown",
+        "is_studio": False,
+        "latitude": 33.7765,
+        "longitude": -84.3928,
+    },
+    {
+        "address": "708 Spring St NW, Atlanta, GA 30308",
+        "rent": 1700,
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "link": "https://thestandardatlanta.landmark-properties.com/floorplans/",
+        "available_date": "TBA",
+        "apartment": "The Standard at Atlanta",
+        "is_studio": False,
+        "latitude": 33.7760,
+        "longitude": -84.3902,
+    },
+    {
+        "address": "708 Spring St NW, Atlanta, GA 30308",
+        "rent": 1350,
+        "bedrooms": 0,
+        "bathrooms": 1,
+        "link": "https://thestandardatlanta.landmark-properties.com/floorplans/#studio-content",
+        "available_date": "TBA",
+        "apartment": "The Standard at Atlanta",
+        "is_studio": True,
+        "latitude": 33.7760,
+        "longitude": -84.3902,
+    },
+    {
+        "address": "708 Spring St NW, Atlanta, GA 30308",
+        "rent": 2600,
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "link": "https://thestandardatlanta.landmark-properties.com/floorplans/#three-beds-content",
+        "available_date": "TBA",
+        "apartment": "The Standard at Atlanta",
+        "is_studio": False,
+        "latitude": 33.7760,
+        "longitude": -84.3902,
+    },
+    {
+        "address": "930 Spring St NW, Atlanta",
+        "rent": 1900,
+        "bedrooms": 2,
+        "bathrooms": 2,
+        "link": "https://uhmidtown.com/rates-floorplans/#floorplan-3",
+        "available_date": "2024-08-15",
+        "apartment": "University House Midtown",
+        "is_studio": False,
+        "latitude": 33.7820,
+        "longitude": -84.3897,
+    },
+    {
+        "address": "930 Spring St NW, Atlanta",
+        "rent": 2200,
+        "bedrooms": 3,
+        "bathrooms": 3,
+        "link": "https://uhmidtown.com/rates-floorplans/#floorplan-2",
+        "available_date": "2024-08-15",
+        "apartment": "University House Midtown",
+        "is_studio": False,
+        "latitude": 33.7820,
+        "longitude": -84.3897,
+    },
+    {
+        "address": "1000 Northside Dr NW, Atlanta",
+        "rent": 1650,
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "link": "https://www.bowerwestside.com/atlanta/bower-westside/conventional/",
+        "available_date": "2024-08-01",
+        "apartment": "Bower Westside",
+        "is_studio": False,
+        "latitude": 33.7798,
+        "longitude": -84.4112,
+    },
+    {
+        "address": "1000 Northside Dr NW, Atlanta",
+        "rent": 2100,
+        "bedrooms": 2,
+        "bathrooms": 2,
+        "link": "https://www.bowerwestside.com/atlanta/bower-westside/conventional/",
+        "available_date": "TBA",
+        "apartment": "Bower Westside",
+        "is_studio": False,
+        "latitude": 33.7798,
+        "longitude": -84.4112,
+    },
+    # The following complexes are fabricated demo/filler data (not scraped) --
+    # added to give the interview demo a fuller map/listing set.
+    {
+        "address": "651 14th St NW, Atlanta, GA 30318",
+        "rent": 1550,
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "link": "https://example.com/the-mix-at-georgia-tech",
+        "available_date": "2024-08-01",
+        "apartment": "The Mix at Georgia Tech",
+        "is_studio": False,
+        "latitude": 33.7853,
+        "longitude": -84.4013,
+    },
+    {
+        "address": "651 14th St NW, Atlanta, GA 30318",
+        "rent": 2050,
+        "bedrooms": 2,
+        "bathrooms": 2,
+        "link": "https://example.com/the-mix-at-georgia-tech",
+        "available_date": "2024-08-01",
+        "apartment": "The Mix at Georgia Tech",
+        "is_studio": False,
+        "latitude": 33.7853,
+        "longitude": -84.4013,
+    },
+    {
+        "address": "500 14th St NW, Atlanta, GA 30318",
+        "rent": 1300,
+        "bedrooms": 0,
+        "bathrooms": 1,
+        "link": "https://example.com/home-park-flats",
+        "available_date": "2024-07-15",
+        "apartment": "Home Park Flats",
+        "is_studio": True,
+        "latitude": 33.7842,
+        "longitude": -84.4028,
+    },
+    {
+        "address": "500 14th St NW, Atlanta, GA 30318",
+        "rent": 1750,
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "link": "https://example.com/home-park-flats",
+        "available_date": "2024-08-01",
+        "apartment": "Home Park Flats",
+        "is_studio": False,
+        "latitude": 33.7842,
+        "longitude": -84.4028,
+    },
+    {
+        "address": "250 17th St NW, Atlanta, GA 30363",
+        "rent": 1900,
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "link": "https://example.com/skyhouse-midtown",
+        "available_date": "2024-08-01",
+        "apartment": "SkyHouse Midtown",
+        "is_studio": False,
+        "latitude": 33.7877,
+        "longitude": -84.3877,
+    },
+    {
+        "address": "250 17th St NW, Atlanta, GA 30363",
+        "rent": 2750,
+        "bedrooms": 2,
+        "bathrooms": 2,
+        "link": "https://example.com/skyhouse-midtown",
+        "available_date": "2024-09-01",
+        "apartment": "SkyHouse Midtown",
+        "is_studio": False,
+        "latitude": 33.7877,
+        "longitude": -84.3877,
+    },
+    {
+        "address": "999 Peachtree St NE, Atlanta, GA 30309",
+        "rent": 2100,
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "link": "https://example.com/1010-midtown",
+        "available_date": "TBA",
+        "apartment": "1010 Midtown",
+        "is_studio": False,
+        "latitude": 33.7845,
+        "longitude": -84.3838,
+    },
+    {
+        "address": "999 Peachtree St NE, Atlanta, GA 30309",
+        "rent": 3100,
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "link": "https://example.com/1010-midtown",
+        "available_date": "TBA",
+        "apartment": "1010 Midtown",
+        "is_studio": False,
+        "latitude": 33.7845,
+        "longitude": -84.3838,
+    },
+    {
+        "address": "55 Ivan Allen Jr Blvd NW, Atlanta, GA 30308",
+        "rent": 1450,
+        "bedrooms": 0,
+        "bathrooms": 1,
+        "link": "https://example.com/fairlie-poplar-lofts",
+        "available_date": "2024-08-01",
+        "apartment": "Fairlie Poplar Lofts",
+        "is_studio": True,
+        "latitude": 33.7625,
+        "longitude": -84.3927,
+    },
+    {
+        "address": "55 Ivan Allen Jr Blvd NW, Atlanta, GA 30308",
+        "rent": 1950,
+        "bedrooms": 2,
+        "bathrooms": 1,
+        "link": "https://example.com/fairlie-poplar-lofts",
+        "available_date": "2024-08-15",
+        "apartment": "Fairlie Poplar Lofts",
+        "is_studio": False,
+        "latitude": 33.7625,
+        "longitude": -84.3927,
+    },
+    {
+        "address": "285 5th St NW, Atlanta, GA 30313",
+        "rent": 1600,
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "link": "https://example.com/square-on-fifth",
+        "available_date": "2024-08-01",
+        "apartment": "Square on Fifth",
+        "is_studio": False,
+        "latitude": 33.7770,
+        "longitude": -84.3925,
+    },
+    {
+        "address": "285 5th St NW, Atlanta, GA 30313",
+        "rent": 2300,
+        "bedrooms": 2,
+        "bathrooms": 2,
+        "link": "https://example.com/square-on-fifth",
+        "available_date": "2024-09-01",
+        "apartment": "Square on Fifth",
+        "is_studio": False,
+        "latitude": 33.7770,
+        "longitude": -84.3925,
+    },
+]
+
+# Firestore format: {"0": "<json string>", "1": "<json string>", ...}
+RESPONSE_BODY = json.dumps({str(i): json.dumps(a) for i, a in enumerate(ARTICLES)})
+
+
+class Handler(BaseHTTPRequestHandler):
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self._cors()
+        self.end_headers()
+
+    def do_GET(self):
+        body = RESPONSE_BODY.encode()
+        self.send_response(200)
+        self._cors()
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def _cors(self):
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+
+    def log_message(self, format, *args):
+        print(f"[mock server] {args[0]} {args[1]}")
+
+
+if __name__ == "__main__":
+    port = 8080
+    print(f"Mock apartment server running at http://localhost:{port}")
+    HTTPServer(("", port), Handler).serve_forever()

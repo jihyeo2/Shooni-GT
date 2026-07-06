@@ -1,41 +1,44 @@
-<template> 
-  <div class="signup-form" style="padding-top: 1%;">
-    <div class="container-signup">
-      <form class="form2" style="margin: auto; height: 30%;">
-        <img class="logo-form" src="../assets/images/logo.png" width="200">
+<template>
+  <div class="min-h-[80vh] flex items-center justify-center bg-veryLightGray px-4 py-16">
+    <div class="auth-card">
+      <img src="../assets/images/logo.png" class="h-9 mx-auto mb-5" alt="Shooni">
+      <h1 class="text-xl font-semibold text-veryDarkBlue">Create your account</h1>
+      <p class="text-sm text-darkGrayishBlue mt-1 mb-6">Save listings and write reviews.</p>
 
-        <div class="group">
-        <label for="username">Username:</label>
-        <input type="text" v-model="username" pattern="^[a-zA-Z]+(( )+[a-zA-z]+)*$" required>
+      <form @submit.prevent="submitSignUp" class="text-left">
+        <div class="mb-4">
+          <label for="username" class="field-label">Username</label>
+          <input type="text" id="username" v-model="username" pattern="^[a-zA-Z]+(( )+[a-zA-z]+)*$" class="field-input" required>
         </div>
-        <div class="group">
-        <label for="email">Email Address:</label>
-        <input type="email" id="email" name="email"
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+        <div class="mb-4">
+          <label for="email" class="field-label">Email address</label>
+          <input type="email" id="email" name="email" v-model="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="field-input" required>
         </div>
-        <div class="group">
-        <label for="password">Password:</label>
-        <input type="password" id="pwd" name="pwd" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
-          title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+        <div class="mb-2">
+          <label for="pwd" class="field-label">Password</label>
+          <input type="password" id="pwd" name="pwd" v-model="password"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+            class="field-input" required>
         </div>
-        <br>
-        <div class="group">
-          <button type="submit" id="submit" name="signup_btn" 
-  class="btn btn-primary btn-user btn-block text-white bg-orange-700 hover:bg-orange-800 focus:ring-2 
-        focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-base px-3 my-1 text-center 
-        dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"> Sign Up </button>
-        </div>
+        <p v-if="error" class="text-sm text-red-600 mt-2">{{ error }}</p>
+        <button type="submit" id="submit" name="signup_btn" :disabled="submitting" class="btn-solid btn-lg btn-block mt-5">Sign up</button>
       </form>
-    </div> <!-- This is close of container -->
-    <form class="form3" style="margin:auto; margin-top: 10px">
-      <p style="text-align: center;">Already have account? <a href="#">Click here</a></p>
-    </form>
-  </div> 
+
+      <p class="text-sm text-darkGrayishBlue mt-5">
+        Already have an account? <router-link to="/login" class="text-brightRed font-semibold no-underline">Log in</router-link>
+      </p>
+    </div>
+  </div>
 </template>
 
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { auth } from '../firebase';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import store from '../store';
 
 export default defineComponent({
   data(){
@@ -43,80 +46,28 @@ export default defineComponent({
       username: '',
       password: '',
       email: '',
+      error: '',
+      submitting: false,
+    }
+  },
+  methods: {
+    async submitSignUp() {
+      this.error = '';
+      this.submitting = true;
+      try {
+        const credential = await createUserWithEmailAndPassword(auth, this.email, this.password);
+        await updateProfile(credential.user, { displayName: this.username });
+        // updateProfile doesn't reliably re-fire onAuthStateChanged right away,
+        // so push the updated user into the store directly to avoid a flash of
+        // the email before the display name catches up.
+        store.dispatch('setUser', credential.user);
+        this.$router.push('/');
+      } catch (e: any) {
+        this.error = e.message || 'Failed to sign up.';
+      } finally {
+        this.submitting = false;
+      }
     }
   }
 })
 </script>
-
-<style>
-
-label{
-  display: block;
-  margin: 20px 0 10px;
-}
-input {
-  font-size: 25px;
-  border: 2px double rgb(255 112 39);
-  border-radius: 4px;
-}
-.form2 {
-  display: center;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  padding: 20px;
-  width: 500px;
-  height: 600px;
-  box-shadow: 0 0 10px rgba(173, 173, 173, 0.292);
-  margin-bottom: 10px;
-  }
-.form3 {
-  display: center;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  padding: 20px;
-  width: 500px;
-  box-shadow: 0 0 10px rgba(173, 173, 173, 0.292);
-  }
-.signup-form {
-    padding-top: 1%;
-    margin-top: 35px;
-    position: absolute;
-    display: center;
-    align-items: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-.signup-form input {
-  margin: 4px 0;
-  width: 100%;
-  max-width: 400px;
-}
-img {
-    max-width: 100%;
-    margin: auto;
-  }
-button {
-  width: 100px;
-  height: 40px;
-}
-.group {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-a {
-  color: blue;
-  text-decoration: underline;
-}
-a:hover {
-  color: red;
-}
-</style>
-
-

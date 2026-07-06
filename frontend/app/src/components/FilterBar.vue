@@ -72,129 +72,39 @@ export default defineComponent({
 
 <template>
     <section class="filter-map">
-        <div class="flex justify-center items-center mt-4 text-brightRed mb-1" style="font-family:avenir;font-size:14px;font-weight:bold;">
-            <div class="flex flex-row space-x-6 justify-evenly">
-
-            <!-- min to max rent -->
-                <div class="flex flex-col" style="margin-left: 10px;">
-                    <label for="min-rent" class="block text-sm font-medium text-gray-700" style="text-align: center;">
-                    Min rent
-                    </label>
-                    <div class="mt-1">
-                        <input
-                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                            type="number"
-                            id="min-rent"
-                            v-model="minRent"
-                            min="1"
-                            max="10000"
-                        />
-                    </div>
-                </div>
-
-                <div class="flex flex-col" style="margin-left: 70px;">
-                    <label for="max-rent" class="block text-sm font-medium text-gray-700" style="text-align: center;">
-                    Max rent
-                    </label>
-                    <div class="mt-1">
-                    <input
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        type="number"
-                        id="max-rent"
-                        v-model="maxRent"
-                        min="1"
-                        max="10000"
-                    />
-                    </div>
-                </div>
-
-            <!-- min to max bathrooms -->
-                <div class="flex flex-col" style="margin-left: 70px;">
-                    <label
-                    for="min-bathrooms"
-                    class="block text-sm font-medium text-gray-700"
-                    style="text-align: center;">
-                    Min baths
-                    </label>
-                    <div class="mt-1">
-                    <input
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        type="number"
-                        id="min-bathrooms"
-                        v-model="minBathrooms"
-                        min="1"
-                        max="10"
-                    />
-                    </div>
-                </div>
-
-                <div class="flex flex-col" style="margin-left: 70px;">
-                    <label
-                    for="max-bathrooms"
-                    class="block text-sm font-medium text-gray-700"
-                    style="text-align: center;">
-                    Max baths
-                    </label>
-                    <div class="mt-1">
-                    <input
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        type="number"
-                        id="max-bathrooms"
-                        v-model="maxBathrooms"
-                        min="1"
-                        max="10"
-                    />
-                    </div>
-                </div>
-
-            <!-- min to max bedrooms -->
-                <div class="flex flex-col" style="margin-left: 70px;">
-                    <label
-                    for="min-bedrooms"
-                    class="block text-sm font-medium text-gray-700"
-                    style="text-align: center;">
-                    Min bedrooms
-                    </label>
-                    <div class="mt-1">
-                    <input
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        type="number"
-                        id="min-bedrooms"
-                        v-model="minBedrooms"
-                        min="1"
-                        max="10000"/>
-                    </div>
-                </div>
-
-                <div class="flex flex-col" style="margin-left: 70px;">
-                    <label
-                    for="max-bedrooms"
-                    class="block text-sm font-medium text-gray-700"
-                    style="text-align: center;">
-                    Max bedrooms
-                    </label>
-                    <div class="mt-1">
-                    <input
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        type="number"
-                        id="max-bedrooms"
-                        v-model="maxBedrooms"
-                        min="1"
-                        max="10000"
-                    />
-                    </div>
-                </div>
-
-            <!-- Proximity -->
-                <div class="my-4 flex flex-col space-x-6" style="margin-top: 50px; margin-left: 70px;">
-                    
-                    <select id="proximity" v-model="proximity" class="mx-2 bg-white border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                        <option value="On Campus">On Campus</option>
-                        <option value="Off Campus">Off Campus</option>
-                        <option value="No Preference">No Preference</option>
-                    </select> 
-                </div>
+        <div class="card flex flex-wrap items-end gap-6 px-6 py-5">
+            <div>
+                <label for="min-rent" class="field-label">Min rent</label>
+                <input class="field-input w-28" type="number" id="min-rent" v-model="minRent" min="1" max="10000" />
+            </div>
+            <div>
+                <label for="max-rent" class="field-label">Max rent</label>
+                <input class="field-input w-28" type="number" id="max-rent" v-model="maxRent" min="1" max="10000" />
+            </div>
+            <div>
+                <label for="min-bathrooms" class="field-label">Min baths</label>
+                <input class="field-input w-24" type="number" id="min-bathrooms" v-model="minBathrooms" min="1" max="10" />
+            </div>
+            <div>
+                <label for="max-bathrooms" class="field-label">Max baths</label>
+                <input class="field-input w-24" type="number" id="max-bathrooms" v-model="maxBathrooms" min="1" max="10" />
+            </div>
+            <div>
+                <label for="min-bedrooms" class="field-label">Min bedrooms</label>
+                <input class="field-input w-24" type="number" id="min-bedrooms" v-model="minBedrooms" min="1" max="10000" />
+            </div>
+            <div>
+                <label for="max-bedrooms" class="field-label">Max bedrooms</label>
+                <input class="field-input w-24" type="number" id="max-bedrooms" v-model="maxBedrooms" min="1" max="10000" />
+            </div>
+            <div class="flex-1 min-w-[140px]">
+                <label for="proximity" class="field-label">Proximity</label>
+                <select id="proximity" v-model="proximity" class="field-input">
+                    <option value="On Campus">On Campus</option>
+                    <option value="Off Campus">Off Campus</option>
+                    <option value="No Preference">No Preference</option>
+                </select>
             </div>
         </div>
-        </section>
+    </section>
 </template>

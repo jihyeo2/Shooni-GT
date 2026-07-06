@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-gcloud functions deploy get-apartments \
---gen2 \
+gcloud functions deploy submit-review \
+    --gen2 \
     --runtime=python311 \
     --region=us-east1 \
     --source=. \
-    --entry-point=get_apartments \
+    --entry-point=submit_review \
     --trigger-http \
     --allow-unauthenticated \
     --project=demoproj-400221

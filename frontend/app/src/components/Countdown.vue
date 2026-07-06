@@ -80,8 +80,10 @@ import VueCountdown from "@chenfengyuan/vue-countdown";
 export default {
   name: "CountdownTimerComponent",
   data() {
+    // Computed relative to "now" (rather than a hardcoded date) so this
+    // never silently counts down to zero and gets stuck there again.
     const now = new Date();
-    const deadline = new Date("January 31 2024 23:59:59");
+    const deadline = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
     return {
       diameter: 125,
       strokeWidth: 8,

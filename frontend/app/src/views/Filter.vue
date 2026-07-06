@@ -1,78 +1,65 @@
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  data() {
+    return {
+      steps: [
+        { label: 'School', to: '/rent', icon: 'school.png' },
+        { label: 'Price', to: '/filter', icon: 'price.png' },
+        { label: 'Place', to: '/filter/1', icon: 'prox.png' },
+        { label: 'Bed & Bath', to: '/filter/2', icon: 'bed.png' },
+        { label: 'Finish', to: '/search', icon: 'finish.png' },
+      ],
+    }
+  },
+  computed: {
+    activeIndex(): number {
+      const path = this.$route.path
+      if (path === '/filter/1') return 2
+      if (path === '/filter/2') return 3
+      if (path === '/filter' || path === '/filter/') return 1
+      return 1
+    },
+  },
+})
+</script>
+
 <template>
-    <br/>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <section id="progress-bar" style="margin-top:-1%;">
-        <div id="my-rounded-rectangle" class="my-rounded-rectangle"> 
+    <section class="pt-12 pb-6 px-6">
+        <div class="max-w-2xl mx-auto flex items-start justify-between">
+            <template v-for="(step, index) in steps" :key="step.label">
+                <div class="flex flex-col items-center gap-2" style="width: 80px;">
+                    <router-link :to="step.to" class="step-icon" :class="{ 'step-icon-active': index <= activeIndex }">
+                        <img :src="`/src/assets/images/${step.icon}`" class="h-5 w-5 object-contain">
+                    </router-link>
+                    <span class="step-label" :class="{ 'step-label-active': index <= activeIndex }">{{ step.label }}</span>
+                </div>
+                <div v-if="index < steps.length - 1" class="step-line" :class="{ 'step-line-active': index < activeIndex }"></div>
+            </template>
         </div>
     </section>
 
-    <section class="progress-icon" style="margin-top: 6%;">
-        <div class="icon">
-                <!-- <div style="position:relative; width:60%; margin-left: 20%;"> -->
-                <div style="margin-right: 15%;">
-                    <router-link to="/rent" class="no-underline">
-                        <img src="../assets/images/school.png" alt="School" width="35" height="100">
-                    </router-link>
-                        <div style="text-align:bottom;font-weight:bold;font-family:avenir">School</div>
-                </div>
-                <div style="margin-right: 15%;">
-                    <router-link to="/filter" class="no-underline">
-                        <img src="../assets/images/price.png" alt="Price" width="20" height="100">
-                    </router-link>
-                    <div style="text-align:center;font-weight:bold;font-family:avenir">Price</div>
-                </div>
-                <div style="margin-right: 15%;">
-                    <router-link to="/filter/1" class="no-underline">
-                        <img src="../assets/images/prox.png" alt="Proximity" width="20">
-                    </router-link>
-                    <div style="text-align:center;font-weight:bold;font-family:avenir">Place</div>
-                </div>
-                <div style="margin-right: 15%;">
-                    <router-link to="/filter/2" class="no-underline">
-                        <img src="../assets/images/bed.png" alt="B&B" width="35" height="100">
-                    </router-link>
-                    <div style="text-align:center;font-weight:bold;font-family:avenir">Bed & Bath</div>
-                </div>
-                <div style="margin-right: 15%;">
-                    <router-link to="/search" class="no-underline">
-                        <img src="../assets/images/finish.png" alt="Finish" width="35" height="100">
-                    </router-link>
-                    <div style="text-align:center;font-weight:bold;font-family:avenir">Finish</div>
-                </div>
-                <!-- </div> -->
-            </div> <!-- This is icon for progress bar close-->
-        </section>
-
-        <router-view></router-view>
+    <router-view></router-view>
 </template>
 
-
-
-
-<style>
-.icon {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  margin-left: 13%;
+<style scoped>
+.step-icon {
+    @apply flex items-center justify-center h-11 w-11 rounded-full bg-gray-100 border-2 border-gray-200 transition-colors;
 }
-
-.f1-my-rounded-rectangle {
-    display: flex;
-    background-color: #f1f1f1;
-    border-radius: 10px;
-    width: 1100px; /*  width */
-    height: 20px; /*  height */
-    margin: auto  ;
+.step-icon-active {
+    @apply bg-brightRedSupLight border-brightRed;
 }
-.btn-secondary {
-  background-color: rgba(219, 116, 20, 0);
-  color: #000000;
-  border: solid white;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer; 
+.step-label {
+    @apply text-xs font-medium text-gray-400 text-center;
+}
+.step-label-active {
+    @apply text-brightRed font-semibold;
+}
+.step-line {
+    @apply flex-1 h-0.5 bg-gray-200 mt-5;
+}
+.step-line-active {
+    @apply bg-brightRed;
 }
 </style>
