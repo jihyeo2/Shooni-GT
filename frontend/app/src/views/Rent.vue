@@ -32,7 +32,7 @@ export default defineComponent({
                 <div class="p-6">
                     <h5 class="rent-card-title">Join the Community</h5>
                     <p class="rent-card-body">Chat with other students and explore the marketplace!</p>
-                    <a href="https://sites.gatech.edu/shooni/" class="btn-solid">Join</a>
+                    <router-link to="/community" class="btn-solid">Join</router-link>
                 </div>
             </div>
 

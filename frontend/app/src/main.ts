@@ -15,11 +15,14 @@ import {
     faLocationPin,
     faDollarSign,
     faChevronDown,
+    faHeart,
+    faUser,
+    faTrash,
   } from '@fortawesome/free-solid-svg-icons'
 
 
 
-library.add(faBath, faBed, faHome, faSignHanging, faLocationPin, faDollarSign, faChevronDown)
+library.add(faBath, faBed, faHome, faSignHanging, faLocationPin, faDollarSign, faChevronDown, faHeart, faUser, faTrash)
 
 const app = createApp(App)
 

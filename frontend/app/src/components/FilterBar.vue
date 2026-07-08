@@ -4,6 +4,12 @@ import { defineComponent,onMounted, watch, ref } from 'vue'
 import type { Filter } from '../types'
 import store from '../store'
 
+export const LISTING_TYPE_OPTIONS = [
+  { value: 'apartment_complex', label: 'Apartment Complex' },
+  { value: 'individual_landlord', label: 'Individual Landlord' },
+  { value: 'sublease', label: 'Sublease' },
+]
+
 
 export default defineComponent({
     name: 'FilterBar',
@@ -22,9 +28,16 @@ export default defineComponent({
     const maxRent = ref(store.state.filter.maxRent)
     const proximity = ref(store.state.filter.proximity)
     const selectedApartments = ref(store.state.filter.selectedApartments)
+    const listingTypes = ref<string[]>(store.state.filter.listingTypes)
 
-
-
+    const toggleListingType = (value: string) => {
+      const index = listingTypes.value.indexOf(value)
+      if (index === -1) {
+        listingTypes.value = [...listingTypes.value, value]
+      } else {
+        listingTypes.value = listingTypes.value.filter(v => v !== value)
+      }
+    }
 
     // const dateRange = ref([new Date(2023, 7, 1), new Date(2023, 8, 31)])
     const filterApartments = () => {
@@ -38,6 +51,7 @@ export default defineComponent({
         // dateRange: dateRange.value,
         proximity: proximity.value,
         selectedApartments: selectedApartments.value,
+        listingTypes: listingTypes.value,
       }
       context.emit('update:filter-apartments', filter)
     }
@@ -51,6 +65,7 @@ export default defineComponent({
         maxRent,
         proximity,
         selectedApartments,
+        listingTypes,
         // dateRange,
       ],
       filterApartments
@@ -65,6 +80,9 @@ export default defineComponent({
       maxRent,
       proximity,
       selectedApartments,
+      listingTypes,
+      toggleListingType,
+      listingTypeOptions: LISTING_TYPE_OPTIONS,
     }
   },
 })
@@ -104,6 +122,21 @@ export default defineComponent({
                     <option value="Off Campus">Off Campus</option>
                     <option value="No Preference">No Preference</option>
                 </select>
+            </div>
+            <div class="w-full">
+                <label class="field-label">Listing type</label>
+                <div class="flex flex-wrap gap-2">
+                    <button
+                        type="button"
+                        v-for="option in listingTypeOptions"
+                        :key="option.value"
+                        class="chip"
+                        :class="{ 'chip-active': listingTypes.includes(option.value) }"
+                        @click="toggleListingType(option.value)"
+                    >
+                        {{ option.label }}
+                    </button>
+                </div>
             </div>
         </div>
     </section>

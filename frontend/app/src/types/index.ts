@@ -11,8 +11,9 @@ export interface Article {
     rent: number
     latitude: number
     longitude: number
+    listing_type?: 'apartment_complex' | 'individual_landlord' | 'sublease'
   }
-  
+
   export type Filter = {
     minBedrooms: number
     maxBedrooms: number
@@ -23,4 +24,5 @@ export interface Article {
     maxRent: number
     proximity: string
     selectedApartments: Array<string>
+    listingTypes: Array<string>
   }

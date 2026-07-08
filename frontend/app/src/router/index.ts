@@ -13,6 +13,10 @@ import Login from '../views/Login.vue';
 import PageNotFound from "../views/PageNotFound.vue";
 import Review from '../views/Review.vue';
 import ComingSoon from "../views/ComingSoon.vue";
+import Dashboard from "../views/Dashboard.vue";
+import Sublease from "../views/Sublease.vue";
+import SubmitSublease from "../views/SubmitSublease.vue";
+import { auth, authReadyPromise } from '../firebase';
 
 
 const routes = [
@@ -129,6 +133,24 @@ const routes = [
         },
     },
     {
+        path: "/sublease",
+        name: "Sublease",
+        component: Sublease,
+        meta: {
+            title: 'Sublease - Shooni',
+            metaTags: [
+              {
+                name: 'description',
+                content: 'Browse or post a sublease on Shooni.'
+              },
+              {
+                property: 'og:description',
+                content: 'Browse or post a sublease on Shooni.'
+              }
+            ]
+          },
+    },
+    {
         path: "/search",
         name: "Search",
         component: Search,
@@ -219,6 +241,44 @@ const routes = [
       },
     },
     {
+      path: "/dashboard",
+      name: "Dashboard",
+      component: Dashboard,
+      meta: {
+        requiresAuth: true,
+        title: 'Dashboard - Shooni',
+        metaTags: [
+          {
+            name: 'description',
+            content: 'Your Shooni dashboard.'
+          },
+          {
+            property: 'og:description',
+            content: 'Your Shooni dashboard.'
+          }
+        ]
+      },
+    },
+    {
+      path: "/sublease/new",
+      name: "SubmitSublease",
+      component: SubmitSublease,
+      meta: {
+        requiresAuth: true,
+        title: 'Post a Sublease - Shooni',
+        metaTags: [
+          {
+            name: 'description',
+            content: 'Post a sublease listing on Shooni.'
+          },
+          {
+            property: 'og:description',
+            content: 'Post a sublease listing on Shooni.'
+          }
+        ]
+      },
+    },
+    {
         path:'/:catchAll(.*)*',
         name: "PageNotFound",
         component: PageNotFound,
@@ -243,6 +303,23 @@ const router = createRouter({
     routes,
 });
 
+
+// Auth guard, registered first so a redirect decision happens before the
+// title/meta guard below touches the document. Awaits authReadyPromise and
+// checks auth.currentUser directly (never the Vuex store) because on a hard
+// refresh Firebase's own auth-state resolution can lag behind the store's
+// dispatch by a tick -- checking the store here could bounce an
+// already-logged-in user to /login.
+router.beforeEach(async (to, from, next) => {
+  if (to.matched.some(r => r.meta && r.meta.requiresAuth)) {
+    await authReadyPromise;
+    if (!auth.currentUser) {
+      next('/login');
+      return;
+    }
+  }
+  next();
+});
 
 // Navigation Guard
 // referenced from https://www.digitalocean.com/community/tutorials/vuejs-vue-router-modify-head

@@ -8,6 +8,8 @@ const navigation = [
   { name: 'Rent', href: '/rent' },
   { name: 'Roommate', href: '/roommate' },
   { name: 'Community', href: '/community' },
+  { name: 'Sublease', href: '/sublease' },
+  { name: 'Reviews', href: '/review' },
   { name: 'About', href: '/about' },
 ]
 
@@ -42,7 +44,10 @@ function logout() {
 
                 <div class="flex items-center gap-3">
                     <template v-if="currentUser">
-                        <span class="hidden sm:inline text-sm text-darkGrayishBlue">{{ currentUser.displayName || currentUser.email }}</span>
+                        <router-link to="/dashboard" class="btn-ghost hidden sm:inline-flex items-center gap-2">
+                            <font-awesome-icon icon="user" />
+                            <span>{{ currentUser.displayName || currentUser.email }}</span>
+                        </router-link>
                         <button type="button" @click="logout" class="btn-ghost">Log Out</button>
                     </template>
                     <template v-else>

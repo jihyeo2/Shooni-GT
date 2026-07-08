@@ -90,8 +90,8 @@
                             Shooni is committed to ensuring digital accessibility for individuals with disabilities. 
                             This little bird is continuously working to improve the accessibility of his web experience 
                             for everyone, and he welcomes feedback and accommodation requests. If you wish to report an issue
-                            or seek an accommodation, please let us know.Shooni will one day hold real estate brokerage licenses in multiple states. Shooni (Canada) does not exist yet. 
-                            Do not sell or share my personal contact information 
+                            or seek an accommodation, please let us know. Shooni will one day hold real estate brokerage licenses in multiple states. Shooni (Canada) does not exist yet. 
+                            Do not sell or share my personal contact information. 
                         </h6>
                         <div class="flex mt-8 items-center justify-center md:justify-center font-bold">
                             <a href="#" class="px-4">About</a>

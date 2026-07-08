@@ -61,6 +61,19 @@
         <button type="button" @click="submitRating" :disabled="submitting" class="btn-solid btn-lg mt-5">Submit review</button>
       </form>
     </div>
+
+    <div class="mt-10">
+      <h2 class="text-xl font-semibold text-veryDarkBlue mb-4">
+        {{ reviews.length }} review{{ reviews.length === 1 ? '' : 's' }}
+      </h2>
+      <p v-if="reviewsError" class="text-sm text-red-600">{{ reviewsError }}</p>
+      <p v-else-if="!reviewsLoading && reviews.length === 0" class="text-darkGrayishBlue">
+        No reviews yet — be the first to write one.
+      </p>
+      <div v-else class="flex flex-col gap-4">
+        <ReviewCard v-for="r in reviews" :key="r.id" :review="r" />
+      </div>
+    </div>
   </div>
 
   <Footer></Footer>
@@ -101,10 +114,12 @@ import { defineComponent } from 'vue';
 import store from '../store';
 import { auth } from '../firebase';
 import Footer from '../components/Footer.vue';
+import ReviewCard from '../components/ReviewCard.vue';
 
 export default defineComponent({
 components: {
   Footer,
+  ReviewCard,
 },
 data() {
   return {
@@ -122,9 +137,30 @@ data() {
     comment: '',
     submitting: false,
     submitError: '',
+    reviews: [] as Array<any>,
+    reviewsLoading: true,
+    reviewsError: '',
   };
 },
+mounted() {
+  this.fetchReviews();
+},
 methods: {
+  async fetchReviews() {
+    this.reviewsLoading = true;
+    this.reviewsError = '';
+    try {
+      const response = await fetch(import.meta.env.VITE_GET_REVIEWS_ENDPOINT_URL);
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+      this.reviews = await response.json();
+    } catch (e: any) {
+      this.reviewsError = e.message || 'Failed to load reviews.';
+    } finally {
+      this.reviewsLoading = false;
+    }
+  },
   setRating(value: number) {
     this.rating = value;
   },
@@ -198,6 +234,9 @@ methods: {
       }
 
       alert('Review submitted, thank you!');
+      this.title = '';
+      this.comment = '';
+      await this.fetchReviews();
     } catch (e: any) {
       this.submitError = e.message || 'Failed to submit review.';
     } finally {

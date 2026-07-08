@@ -1,0 +1,6 @@
+functions-framework==3.*
+flask==2.1.0
+werkzeug==2.1.2
+google-cloud-firestore>=2.9.1
+firebase-admin==6.5.0
+requests

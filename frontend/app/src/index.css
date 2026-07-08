@@ -36,4 +36,11 @@
   .auth-card {
     @apply card w-full max-w-sm mx-auto p-8 text-center;
   }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-gray-300 bg-white px-3.5 py-1.5 text-sm font-medium text-veryDarkBlue/80 cursor-pointer transition-colors duration-150 hover:border-brightRed hover:text-brightRed;
+  }
+  .chip-active {
+    @apply bg-brightRed border-brightRed text-white hover:text-white;
+  }
 }
