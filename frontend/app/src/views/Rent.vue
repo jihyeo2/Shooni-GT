@@ -19,7 +19,7 @@ export default defineComponent({
     <section class="py-20 px-6 md:px-16 bg-white">
         <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
             <div class="rent-card">
-                <div class="rent-card-img" style="background-image: url('/src/assets/images/bg11.png')"></div>
+                <div class="rent-card-img" style="background-image: url('/images/bg11.png')"></div>
                 <div class="p-6">
                     <h5 class="rent-card-title">Find your Roomies</h5>
                     <p class="rent-card-body">Search your area and find the perfect roommate(s) for you!</p>
@@ -28,7 +28,7 @@ export default defineComponent({
             </div>
 
             <div class="rent-card">
-                <div class="rent-card-img" style="background-image: url('/src/assets/images/bg22.png')"></div>
+                <div class="rent-card-img" style="background-image: url('/images/bg22.png')"></div>
                 <div class="p-6">
                     <h5 class="rent-card-title">Join the Community</h5>
                     <p class="rent-card-body">Chat with other students and explore the marketplace!</p>
@@ -37,7 +37,7 @@ export default defineComponent({
             </div>
 
             <div class="rent-card">
-                <div class="rent-card-img" style="background-image: url('/src/assets/images/bg33.png')"></div>
+                <div class="rent-card-img" style="background-image: url('/images/bg33.png')"></div>
                 <div class="p-6">
                     <h5 class="rent-card-title">Create an account</h5>
                     <p class="rent-card-body">Sign up to receive all the benefits Shooni has to offer!</p>
@@ -54,7 +54,7 @@ export default defineComponent({
 .rent-hero {
     height: 85vh;
     min-height: 420px;
-    background-image: url("/src/assets/images/labg2.png");
+    background-image: url("/images/labg2.png");
     background-position: center;
     background-size: cover;
     display: flex;

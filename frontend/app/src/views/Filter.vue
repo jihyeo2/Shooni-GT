@@ -31,7 +31,7 @@ export default defineComponent({
             <template v-for="(step, index) in steps" :key="step.label">
                 <div class="flex flex-col items-center gap-2" style="width: 80px;">
                     <router-link :to="step.to" class="step-icon" :class="{ 'step-icon-active': index <= activeIndex }">
-                        <img :src="`/src/assets/images/${step.icon}`" class="h-5 w-5 object-contain">
+                        <img :src="`/images/${step.icon}`" class="h-5 w-5 object-contain">
                     </router-link>
                     <span class="step-label" :class="{ 'step-label-active': index <= activeIndex }">{{ step.label }}</span>
                 </div>

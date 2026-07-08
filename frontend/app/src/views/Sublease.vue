@@ -27,7 +27,7 @@ export default defineComponent({
     <section class="py-20 px-6 md:px-16 bg-white">
         <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
             <div class="sublease-card">
-                <div class="sublease-card-img" style="background-image: url('/src/assets/images/gg2.png')"></div>
+                <div class="sublease-card-img" style="background-image: url('/images/gg2.png')"></div>
                 <div class="p-6">
                     <h5 class="sublease-card-title">Browse Subleases</h5>
                     <p class="sublease-card-body">See every sublease listed on Shooni, filtered and ready to compare.</p>
@@ -36,7 +36,7 @@ export default defineComponent({
             </div>
 
             <div class="sublease-card">
-                <div class="sublease-card-img" style="background-image: url('/src/assets/images/room.jpg')"></div>
+                <div class="sublease-card-img" style="background-image: url('/images/room.jpg')"></div>
                 <div class="p-6">
                     <h5 class="sublease-card-title">Post a Sublease</h5>
                     <p class="sublease-card-body">Subleasing your place? List it directly -- no agency, no listing fee.</p>
@@ -53,7 +53,7 @@ export default defineComponent({
 .sublease-hero {
     height: 60vh;
     min-height: 340px;
-    background-image: url("/src/assets/images/labg.jpg");
+    background-image: url("/images/labg.jpg");
     background-position: center;
     background-size: cover;
     display: flex;

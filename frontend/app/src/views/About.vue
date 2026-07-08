@@ -26,7 +26,7 @@ export default defineComponent({
           </p>
         </div>
         <div class="flex justify-center">
-          <img src="/src/assets/images/au2.jpg" class="about-photo" alt="Students moving into an apartment">
+          <img src="/images/au2.jpg" class="about-photo" alt="Students moving into an apartment">
         </div>
       </div>
     </section>
@@ -34,7 +34,7 @@ export default defineComponent({
     <section class="py-20 px-6 md:px-16 bg-veryLightGray">
       <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         <div class="order-2 md:order-1 flex justify-center">
-          <img src="/src/assets/images/au3.jpg" class="about-photo" alt="Students in a shared living space">
+          <img src="/images/au3.jpg" class="about-photo" alt="Students in a shared living space">
         </div>
         <div class="order-1 md:order-2">
           <h2 class="text-3xl font-semibold text-veryDarkBlue mb-5">Our Values</h2>
@@ -58,7 +58,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: linear-gradient(rgba(29,30,37,0.45), rgba(29,30,37,0.45)), url("/src/assets/images/aubg1.jpg");
+  background-image: linear-gradient(rgba(29,30,37,0.45), rgba(29,30,37,0.45)), url("/images/aubg1.jpg");
   background-position: center;
   background-size: cover;
 }

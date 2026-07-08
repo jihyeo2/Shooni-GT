@@ -88,7 +88,7 @@ export default defineComponent({
     min-height: 560px;
     display: flex;
     align-items: center;
-    background-image: linear-gradient(100deg, rgba(255,251,247,0.94) 0%, rgba(255,251,247,0.75) 40%, rgba(255,251,247,0.1) 65%, rgba(255,251,247,0) 80%), url("/src/assets/images/bg.png");
+    background-image: linear-gradient(100deg, rgba(255,251,247,0.94) 0%, rgba(255,251,247,0.75) 40%, rgba(255,251,247,0.1) 65%, rgba(255,251,247,0) 80%), url("/images/bg.png");
     background-position: center;
     background-size: cover;
     padding: 0 6%;
